@@ -1,8 +1,9 @@
 package homeworks.collections
 
-import homeworks.HomeworksUtils.TaskSyntax
-
 object task_caesar {
+
+  /** from 65 to 90 */
+  val AlphabetLength: Int = ('A' to 'Z').size
 
   /**
    * В данном задании Вам предлагается реализовать функции,
@@ -18,7 +19,7 @@ object task_caesar {
    * @return зашифрованное слово
    */
   def encrypt(word: String, offset: Int): String =
-    task"Реализуйте метод `encrypt`"()
+    shift(word, offset % AlphabetLength)
 
   /**
    * @param cipher шифр, который необходимо расшифровать
@@ -26,6 +27,11 @@ object task_caesar {
    * @return расшифрованное слово
    */
   def decrypt(cipher: String, offset: Int): String =
-    task"Реализуйте метод `decrypt`"()
+    shift(cipher, AlphabetLength - offset % AlphabetLength)
 
+  private def shift(s: String, offset: Int): String =
+    s.map { c =>
+      val x = c + offset
+      (if (x > 'Z') x - AlphabetLength else x).asInstanceOf[Char]
+    }
 }
